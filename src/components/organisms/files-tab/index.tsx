@@ -1,0 +1,108 @@
+import {
+    PageTabs,
+    PageTabsList,
+    PageTabsTrigger,
+} from "@/components/atoms/page-tab";
+import { Button } from "@/components/ui/button";
+import { AnimatePresence, motion } from "framer-motion";
+import { File, House, PlusIcon } from "lucide-react";
+import { useState } from "react";
+
+export const FilesTab = () => {
+    const [tabs, setTabs] = useState([
+        {
+            fileName: "AutoPVZ",
+            id: 1,
+        },
+    ]);
+
+    const onRemove = (id: number) => {
+        setTabs((prevState) => {
+            return prevState.filter((tab) => tab.id != id);
+        });
+    };
+
+    const onAdd = () => {
+        setTabs((prevState) => {
+            return [
+                ...prevState,
+                {
+                    fileName: "New File",
+                    id: Math.floor(Math.random() * 10),
+                },
+            ];
+        });
+    };
+
+    return (
+        <div className="top-0 sticky flex items-center h-10  bg-muted gap-1 overflow-y-hidden">
+            <PageTabs>
+                <PageTabsList>
+                    <AnimatePresence mode={"popLayout"} initial={false}>
+                        <motion.div
+                            transition={{
+                                type: "spring",
+                                duration: 0.3,
+                                bounce: 0,
+                            }}
+                            layout
+                            initial={{ y: -40 }}
+                            animate={{ y: 0 }}
+                            exit={{ y: 40 }}
+                        >
+                            <PageTabsTrigger
+                                linkProps={{
+                                    to: "/",
+                                }}
+                                icon={<House className="w-4 h-4" />}
+                                value={`/`}
+                            />
+                        </motion.div>
+                        {tabs.map(({ fileName, id }) => {
+                            return (
+                                <motion.div
+                                    transition={{
+                                        type: "spring",
+                                        duration: 0.3,
+                                        bounce: 0,
+                                    }}
+                                    layout
+                                    initial={{ y: -40 }}
+                                    animate={{ y: 0 }}
+                                    exit={{ y: 40 }}
+                                    key={id}
+                                >
+                                    <PageTabsTrigger
+                                        key={id}
+                                        linkProps={{
+                                            to: "/files/$id",
+                                            params: {
+                                                id: `${id}`,
+                                            },
+                                        }}
+                                        removable
+                                        onRemove={() => {
+                                            onRemove(id);
+                                        }}
+                                        icon={<File className="w-4 h-4" />}
+                                        value={`${id}`}
+                                    >
+                                        {fileName}
+                                    </PageTabsTrigger>
+                                </motion.div>
+                            );
+                        })}
+                    </AnimatePresence>
+                </PageTabsList>
+            </PageTabs>
+            <Button
+                variant={"ghost"}
+                size={"icon"}
+                className="hover:bg-background  w-5 h-5 text-muted-foreground"
+                onClick={onAdd}
+            >
+                <PlusIcon className="w-3.5 h-3.5" />
+            </Button>
+        </div>
+    );
+};
