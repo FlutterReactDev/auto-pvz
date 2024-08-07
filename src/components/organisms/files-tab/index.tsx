@@ -4,12 +4,20 @@ import {
     PageTabsTrigger,
 } from "@/components/atoms/page-tab";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { File, House, PlusIcon } from "lucide-react";
 import { useState } from "react";
 
 export const FilesTab = () => {
-    const [tabs, setTabs] = useState([
+    const navigate = useNavigate();
+    const [tabs, setTabs] = useState<
+        {
+            fileName: string;
+            id: number;
+            isNew?: boolean;
+        }[]
+    >([
         {
             fileName: "AutoPVZ",
             id: 1,
@@ -29,8 +37,12 @@ export const FilesTab = () => {
                 {
                     fileName: "New File",
                     id: Math.floor(Math.random() * 10),
+                    isNew: true,
                 },
             ];
+        });
+        navigate({
+            to: "/new-file",
         });
     };
 
@@ -58,7 +70,7 @@ export const FilesTab = () => {
                                 value={`/`}
                             />
                         </motion.div>
-                        {tabs.map(({ fileName, id }) => {
+                        {tabs.map(({ fileName, id, isNew }) => {
                             return (
                                 <motion.div
                                     transition={{
@@ -80,6 +92,11 @@ export const FilesTab = () => {
                                                 id: `${id}`,
                                             },
                                         }}
+                                        {...(isNew && {
+                                            linkProps: {
+                                                to: "/new-file",
+                                            },
+                                        })}
                                         removable
                                         onRemove={() => {
                                             onRemove(id);

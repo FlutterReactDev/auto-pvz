@@ -35,9 +35,6 @@ export const FilePage = () => {
                     wheelPanning: true,
                     velocityDisabled: true,
                 }}
-                zoomAnimation={{
-                    disabled: true,
-                }}
             >
                 <Button className="absolute right-4 bottom-10 z-50 ">
                     Скачать спецификацию
@@ -55,10 +52,7 @@ export const FilePage = () => {
                             <img src={ExImage} className="w-auto max-w-none" />
                         </TransformComponent>
                     </ContextMenuTrigger>
-                    <ContextMenuContent
-                        className="w-64"
-                      
-                    >
+                    <ContextMenuContent className="w-64">
                         <ContextMenuItem inset>
                             Back
                             <ContextMenuShortcut>⌘[</ContextMenuShortcut>
