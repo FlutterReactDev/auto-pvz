@@ -3,6 +3,7 @@ import {
     PageTabsList,
     PageTabsTrigger,
 } from "@/components/atoms/page-tab";
+import { ThemeSwitcher } from "@/components/molecules/theme-switcher";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
@@ -120,6 +121,7 @@ export const FilesTab = () => {
             >
                 <PlusIcon className="w-3.5 h-3.5" />
             </Button>
+            <ThemeSwitcher />
         </div>
     );
 };
