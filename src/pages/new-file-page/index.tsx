@@ -1,16 +1,16 @@
+import { DwgUploader } from "@/components/organisms/dwg-uploader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Plus, Search } from "lucide-react";
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
-    TableFooter,
     TableHead,
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { Plus, Search } from "lucide-react";
+
 const invoices = [
     {
         recent: {
@@ -44,10 +44,7 @@ const invoices = [
 export const NewFilePage = () => {
     return (
         <div className="flex gap-7 max-w-xl mx-auto mt-16 flex-col">
-            <Button className="w-full h-56 flex-col gap-4">
-                <Plus />
-                Создать новый проект
-            </Button>
+            <DwgUploader />
             <div className="relative">
                 <Search className="absolute top-[50%] left-2 translate-y-[-50%]" />
                 <Input className="pl-10" placeholder="Поиск файла" />

@@ -1,5 +1,5 @@
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
-import ExImage from "@/assets/image 3.png";
+
 import { Button } from "@/components/ui/button";
 import { FileSidebar } from "@/components/organisms/file-sidebar";
 import { FileToolbar } from "@/components/organisms/file-toolbar";
@@ -18,17 +18,22 @@ import {
     ContextMenuSubTrigger,
     ContextMenuTrigger,
 } from "@/components/ui/context-menu";
+import { useGetSvgQuery } from "@/api/DWG";
 export const FilePage = () => {
+    const { data } = useGetSvgQuery({
+        dwg_id: 77,
+        layer_id: 6345,
+        zoom: 100,
+    });
+
     return (
         <div className="relative h-full bg-muted-foreground ">
-            <FileSidebar />
-            <FileToolbar />
             <TransformWrapper
                 minScale={0.1}
                 initialScale={0.5}
                 centerOnInit
                 disabled={false}
-                maxScale={5}
+                maxScale={20}
                 limitToBounds={false}
                 doubleClick={{ disabled: true }}
                 panning={{
@@ -36,6 +41,8 @@ export const FilePage = () => {
                     velocityDisabled: true,
                 }}
             >
+                <FileSidebar />
+                <FileToolbar />
                 <Button className="absolute right-4 bottom-10 z-50 ">
                     Скачать спецификацию
                 </Button>
@@ -49,7 +56,14 @@ export const FilePage = () => {
                                 height: "100%",
                             }}
                         >
-                            <img src={ExImage} className="w-auto max-w-none" />
+                            {data && (
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: data,
+                                    }}
+                                    className="w-full h-full"
+                                />
+                            )}
                         </TransformComponent>
                     </ContextMenuTrigger>
                     <ContextMenuContent className="w-64">
